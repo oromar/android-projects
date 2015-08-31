@@ -1,0 +1,14 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_header_general">Sort By</string>
+
+    <string-array name="sort_titles">
+        <item>Popularity</item>
+        <item>Rating</item>
+    </string-array>
+    <string-array name="sort_values">
+        <item>popularity.desc</item>
+        <item>vote_average.desc</item>
+    </string-array>
+</resources>
