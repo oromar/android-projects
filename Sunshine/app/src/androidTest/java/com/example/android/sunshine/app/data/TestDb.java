@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
+import java.util.Date;
 import java.util.HashSet;
 
 import br.com.oromar.dev.android.sunshine.data.WeatherContract;
@@ -163,12 +164,41 @@ public class TestDb extends AndroidTestCase {
         // First insert the location, and then use the locationRowId to insert
         // the weather. Make sure to cover as many failure cases as you can.
 
+        // First step: Get reference to writable database
+        SQLiteDatabase database = new WeatherDbHelper(mContext).getWritableDatabase();
+        // Create ContentValues of what you want to insert
+        // (you can use the createNorthPoleLocationValues if you wish)
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WeatherContract.LocationEntry.LOCATION_SETTING, "olinda");
+        contentValues.put(WeatherContract.LocationEntry.CITY_NAME, "olinda");
+        contentValues.put(WeatherContract.LocationEntry.COORD_LONG, 105.63);
+        contentValues.put(WeatherContract.LocationEntry.COORD_LAT, 96.10);
+
+        // Insert ContentValues into database and get a row ID back
+
+        long rowId = database.insert(WeatherContract.LocationEntry.TABLE_NAME, null, contentValues);
+
+        ContentValues secondContentValues = new ContentValues();
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, rowId);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, new Date().getTime());
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 10.36);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, 12.69);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, 78);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, 60);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 12.56);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC, "short description");
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, 12);
+        secondContentValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 2);
+
+
         // Instead of rewriting all of the code we've already written in testLocationTable
         // we can move this code to insertLocation and then call insertLocation from both
         // tests. Why move it? We need the code to return the ID of the inserted location
         // and our testLocationTable can only return void because it's a test.
 
         // First step: Get reference to writable database
+
+        long row = database.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, secondContentValues);
 
         // Create ContentValues of what you want to insert
         // (you can use the createWeatherValues TestUtilities function if you wish)
@@ -177,6 +207,43 @@ public class TestDb extends AndroidTestCase {
 
         // Query the database and receive a Cursor back
 
+        Cursor cursor = database.query(WeatherContract.WeatherEntry.TABLE_NAME, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
+                assertEquals(
+                        secondContentValues.getAsString(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC),
+                        cursor.getString(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_HUMIDITY),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_HUMIDITY)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_DEGREES),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DEGREES)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_PRESSURE),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE)));
+                assertEquals(
+                        secondContentValues.getAsLong(WeatherContract.WeatherEntry.COLUMN_LOC_KEY).longValue(),
+                        cursor.getLong(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_LOC_KEY)));
+                assertEquals(
+                        secondContentValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_PRESSURE),
+                        cursor.getDouble(cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE)));
+            }
+        }
+
         // Move the cursor to a valid database row
 
         // Validate data in resulting Cursor with the original ContentValues
@@ -184,6 +251,8 @@ public class TestDb extends AndroidTestCase {
         // query if you like)
 
         // Finally, close the cursor and database
+        cursor.close();
+        database.close();
     }
 
 
