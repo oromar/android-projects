@@ -48,7 +48,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         Intent intent = getActivity().getIntent();
-        TextView text = (TextView) rootView.findViewById(R.id.text_detail_activity);
+        TextView text = (TextView) rootView.findViewById(R.id.list_item_forecast_textview);
         if (intent != null){
             mForecastDetail = intent.getDataString();
         }
@@ -99,12 +99,11 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
                 " - " + data.getString(ForecastAdapter.COL_WEATHER_DESC) +
                 " - " + Utility.formatTemperature(getActivity(), max, isMetric) +
                 " / " + Utility.formatTemperature(getActivity(), min, isMetric);
-        TextView txt = (TextView) getView().findViewById(R.id.text_detail_activity);
+        TextView txt = (TextView) getView().findViewById(R.id.list_item_forecast_textview);
         txt.setText(mForecastDetail);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }
