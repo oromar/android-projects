@@ -120,11 +120,13 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/list_item_icon"
                     android:src="@mipmap/ic_launcher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/list_item_forecast_textview"
                     android:textSize="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
