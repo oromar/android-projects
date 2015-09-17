@@ -3,7 +3,6 @@ package br.com.oromar.dev.android.sunshine;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -17,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import br.com.oromar.dev.android.sunshine.data.WeatherContract;
 
@@ -48,11 +46,11 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         Intent intent = getActivity().getIntent();
-        TextView text = (TextView) rootView.findViewById(R.id.list_item_forecast_textview);
-        if (intent != null){
+        if (intent != null) {
             mForecastDetail = intent.getDataString();
         }
-        text.setText(mForecastDetail);
+        ForecastAdapter.DetailViewHolder holder = new ForecastAdapter.DetailViewHolder(rootView);
+        rootView.setTag(holder);
         return rootView;
     }
 
@@ -82,7 +80,6 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
                 null,
                 null,
                 WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ");
-
         return loader;
     }
 
@@ -95,15 +92,28 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         long date = data.getLong(ForecastAdapter.COL_WEATHER_DATE);
         double max = data.getDouble(ForecastAdapter.COL_WEATHER_MAX_TEMP);
         double min = data.getDouble(ForecastAdapter.COL_WEATHER_MIN_TEMP);
-        mForecastDetail = Utility.formatDate(date) +
-                " - " + data.getString(ForecastAdapter.COL_WEATHER_DESC) +
-                " - " + Utility.formatTemperature(getActivity(), max, isMetric) +
-                " / " + Utility.formatTemperature(getActivity(), min, isMetric);
-        TextView txt = (TextView) getView().findViewById(R.id.list_item_forecast_textview);
-        txt.setText(mForecastDetail);
+        String description = data.getString(ForecastAdapter.COL_WEATHER_DESC);
+        String humidity = data.getString(ForecastAdapter.COL_HUMIDITY);
+        String pressure = data.getString(ForecastAdapter.COL_PRESSURE);
+        String windSpeed = data.getString(ForecastAdapter.COL_WIND_SPEED);
+
+
+        ForecastAdapter.DetailViewHolder holder = (ForecastAdapter.DetailViewHolder) getView().getTag();
+        holder.date.setText(Utility.getFriendlyDayString(getActivity(), date));
+        holder.description.setText(description);
+        holder.highTemperature.setText(Utility.formatTemperature(getActivity(), max, isMetric));
+        holder.lowTemperature.setText(Utility.formatTemperature(getActivity(), min, isMetric));
+        holder.imageIcon.setImageResource(R.mipmap.ic_launcher);
+        holder.humidity.setText(humidity);
+        holder.pressure.setText(pressure);
+
+        holder.wind.setText(windSpeed);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
+
+
+
 }

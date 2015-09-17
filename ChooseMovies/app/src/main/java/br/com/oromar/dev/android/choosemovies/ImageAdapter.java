@@ -23,15 +23,15 @@ public class ImageAdapter extends BaseAdapter {
 
     public static final int DEFAULT_NUM_COLUMNS = 2;
     private Context context;
-    private List<String> urls;
+    private List<Uri> urls;
 
 
-    public ImageAdapter(Context context, List<String> urls){
+    public ImageAdapter(Context context, List<Uri> urls){
         this.context = context;
         this.urls = urls;
     }
 
-    public void add(String s){
+    public void add(Uri s){
         urls.add(s);
     }
 
@@ -74,7 +74,7 @@ public class ImageAdapter extends BaseAdapter {
         float nih = ih / iw * niw;
 
         Picasso.with(context)
-                .load(Uri.parse(urls.get(position)))
+                .load(urls.get(position))
                 .resize(Math.round(niw), Math.round(nih))
                 .into(imageView);
         return imageView;

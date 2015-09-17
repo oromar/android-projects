@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,11 +55,11 @@ public class DetailActivity extends AppCompatActivity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int imageWidth = width / 2;
-        Picasso.with(this).load(Uri.parse(selectedMovie.getCompletePosterPath()))
+        Picasso.with(this).load(selectedMovie.getCompletePosterPath())
                 .resize(imageWidth, (int) Math.round(imageWidth * 1.5))
                 .into(imageView);
         ImageView backdrop = (ImageView) findViewById(R.id.backdrop_image);
-        Picasso.with(this).load(Uri.parse(selectedMovie.getCompleteBackdropPath()))
+        Picasso.with(this).load(selectedMovie.getCompleteBackdropPath())
                 .resize(width, (int) Math.round(imageWidth * 1.2))
                 .into(backdrop);
     }

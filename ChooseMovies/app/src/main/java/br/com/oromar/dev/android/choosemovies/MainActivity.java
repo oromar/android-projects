@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
         GridView gridView = (GridView) findViewById(R.id.grid_view);
-        adapter = new ImageAdapter(this, new ArrayList<String>());
+        adapter = new ImageAdapter(this, new ArrayList<Uri>());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
         searchText = (EditText) findViewById(R.id.search_field);
@@ -231,11 +231,9 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 0; i < count; i++) {
                     actualRecord = new JSONObject(String.valueOf(array.getJSONObject(i)));
                     movie = new Movie();
-                    movie.setAdult(actualRecord.getBoolean(ADULT));
                     movie.setTitle(actualRecord.optString(TITLE));
                     movie.setBackDropPath(actualRecord.optString(BACKDROP_PATH));
                     movie.setPosterPath(actualRecord.optString(POSTER_PATH));
-                    movie.setOriginalLanguage(actualRecord.optString(ORIGINAL_LANGUAGE));
                     movie.setOverview(actualRecord.optString(OVERVIEW));
                     movie.setRate(actualRecord.optString(VOTE_AVERAGE));
                     String releaseDate = actualRecord.optString(RELEASE_DATE);

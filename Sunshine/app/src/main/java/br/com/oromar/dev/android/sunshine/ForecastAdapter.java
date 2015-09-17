@@ -28,8 +28,11 @@ public class ForecastAdapter extends CursorAdapter {
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.LocationEntry.LOCATION_SETTING,
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+            WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
+            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.LocationEntry.COORD_LAT,
-            WeatherContract.LocationEntry.COORD_LONG
+            WeatherContract.LocationEntry.COORD_LONG,
     };
 
     static final int COL_WEATHER_ID = 0;
@@ -39,8 +42,11 @@ public class ForecastAdapter extends CursorAdapter {
     static final int COL_WEATHER_MIN_TEMP = 4;
     static final int COL_LOCATION_SETTING = 5;
     static final int COL_WEATHER_CONDITION_ID = 6;
-    static final int COL_COORD_LAT = 7;
-    static final int COL_COORD_LONG = 8;
+    static final int COL_HUMIDITY = 7;
+    static final int COL_PRESSURE= 8;
+    static final int COL_WIND_SPEED = 9;
+    static final int COL_COORD_LAT = 10;
+    static final int COL_COORD_LONG = 11;
 
 
 
@@ -56,40 +62,6 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public int getItemViewType(int position) {
         return (position == 0) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
-    }
-
-    /* The date/time conversion code is going to be moved outside the asynctask later,
-             * so for convenience we're breaking it out into its own method now.
-             */
-    private String getReadableDateString(long time) {
-        // Because the API returns a unix timestamp (measured in seconds),
-        // it must be converted to milliseconds in order to be converted to valid date.
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("E, MMM d");
-        return format.format(date).toString();
-    }
-
-    /**
-     * Prepare the weather high/lows for presentation.
-     */
-    private String formatHighLows(double high, double low) {
-        boolean isMetric = Utility.isMetric(mContext);
-        String highLowStr = Utility.formatTemperature(mContext, high, isMetric) + "/" + Utility.formatTemperature(mContext, low, isMetric);
-        return highLowStr;
-    }
-
-    /*
-        This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string.
-     */
-    private String convertCursorRowToUXFormat(Cursor cursor) {
-        String highAndLow = formatHighLows(
-                cursor.getDouble(COL_WEATHER_MAX_TEMP),
-                cursor.getDouble(COL_WEATHER_MIN_TEMP));
-
-        return Utility.formatDate(cursor.getLong(COL_WEATHER_DATE)) +
-                " - " + cursor.getString(COL_WEATHER_DESC) +
-                " - " + highAndLow;
     }
 
     /*
@@ -117,8 +89,8 @@ public class ForecastAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         long date = cursor.getLong(ForecastAdapter.COL_WEATHER_DATE);
-        int min = cursor.getInt(COL_WEATHER_MIN_TEMP);
-        int max = cursor.getInt(COL_WEATHER_MAX_TEMP);
+        double min = cursor.getDouble(COL_WEATHER_MIN_TEMP);
+        double max = cursor.getDouble(COL_WEATHER_MAX_TEMP);
         String desc = cursor.getString(COL_WEATHER_DESC);
 
         boolean isMetric = Utility.isMetric(context);
@@ -134,18 +106,35 @@ public class ForecastAdapter extends CursorAdapter {
 
     public static class ViewHolder {
 
-        public final TextView  date;
-        public final TextView  highTemperature;
-        public final TextView  lowTemperature;
-        public final TextView  description;
-        public final ImageView imageIcon;
+        public static TextView  date;
+        public static TextView  highTemperature;
+        public static TextView  lowTemperature;
+        public static TextView  description;
+        public static ImageView imageIcon;
 
-        public ViewHolder(View view){
-            date = (TextView) view.findViewById(R.id.list_item_date_textview);
-            highTemperature = (TextView) view.findViewById(R.id.list_item_high_textview);
-            lowTemperature = (TextView) view.findViewById(R.id.list_item_low_textview);
-            description = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-            imageIcon = (ImageView) view.findViewById(R.id.list_item_icon);
+        public ViewHolder(View view) {
+            ViewHolder.date = (TextView) view.findViewById(R.id.list_item_date_textview);
+            ViewHolder.highTemperature = (TextView) view.findViewById(R.id.list_item_high_textview);
+            ViewHolder.lowTemperature = (TextView) view.findViewById(R.id.list_item_low_textview);
+            ViewHolder.description = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+            ViewHolder.imageIcon = (ImageView) view.findViewById(R.id.list_item_icon);
         }
     }
+
+    public static class DetailViewHolder extends ViewHolder{
+
+        public static TextView  humidity;
+        public static TextView  wind;
+        public static TextView  pressure;
+
+        public DetailViewHolder(View view) {
+            super(view);
+            DetailViewHolder.humidity = (TextView) view.findViewById(R.id.list_item_humidity_text_view);
+            DetailViewHolder.wind= (TextView) view.findViewById(R.id.list_item_wind_text_view);
+            DetailViewHolder.pressure = (TextView) view.findViewById(R.id.list_item_pressure_text_view);
+        }
+
+    }
+
+
 }
