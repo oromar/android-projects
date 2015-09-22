@@ -142,4 +142,53 @@ public class Utility {
         Date date = new Date(dateInMillis);
         return DateFormat.getDateInstance().format(date);
     }
+
+    public static int getImageResource(String weatherDescription){
+
+        switch (weatherDescription){
+            case "Clear":
+                return R.drawable.ic_clear;
+            case "Cloudy":
+                return R.drawable.ic_cloudy;
+            case "Rain":
+                return R.drawable.ic_rain;
+            case "Snow":
+                return R.drawable.ic_snow;
+            case "Fog":
+                return R.drawable.ic_fog;
+            case "Storm":
+                return R.drawable.ic_storm;
+            case "Light Rain":
+                return R.drawable.ic_light_rain;
+            case "Light Clouds":
+                return R.drawable.ic_light_clouds;
+            default:
+                return 0;
+        }
+    }
+
+    public static int getImageResourceToday(String weatherDescription){
+
+        switch (weatherDescription){
+            case "Clear":
+                return R.drawable.art_clear;
+            case "Cloudy":
+                return R.drawable.art_clouds;
+            case "Rain":
+                return R.drawable.art_rain;
+            case "Snow":
+                return R.drawable.art_snow;
+            case "Fog":
+                return R.drawable.art_fog;
+            case "Storm":
+                return R.drawable.art_storm;
+            case "Light Rain":
+                return R.drawable.art_light_rain;
+            case "Light Clouds":
+                return R.drawable.art_light_clouds;
+            default:
+                return 0;
+        }
+    }
+
 }

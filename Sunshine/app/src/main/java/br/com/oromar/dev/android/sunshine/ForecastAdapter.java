@@ -88,6 +88,8 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
+        int viewType = cursor.getPosition();
+
         long date = cursor.getLong(ForecastAdapter.COL_WEATHER_DATE);
         double min = cursor.getDouble(COL_WEATHER_MIN_TEMP);
         double max = cursor.getDouble(COL_WEATHER_MAX_TEMP);
@@ -96,7 +98,11 @@ public class ForecastAdapter extends CursorAdapter {
         boolean isMetric = Utility.isMetric(context);
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        viewHolder.imageIcon.setImageResource(R.mipmap.ic_launcher);
+        if (viewType == VIEW_TYPE_TODAY){
+            viewHolder.imageIcon.setImageResource(Utility.getImageResourceToday(desc));
+        } else {
+            viewHolder.imageIcon.setImageResource(Utility.getImageResource(desc));
+        }
         viewHolder.date.setText(Utility.getFriendlyDayString(context, date));
         viewHolder.lowTemperature.setText(Utility.formatTemperature(mContext, min, isMetric));
         viewHolder.highTemperature.setText(Utility.formatTemperature(mContext, max, isMetric));

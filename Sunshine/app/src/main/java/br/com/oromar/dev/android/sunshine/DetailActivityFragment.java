@@ -97,13 +97,12 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         String pressure = data.getString(ForecastAdapter.COL_PRESSURE);
         String windSpeed = data.getString(ForecastAdapter.COL_WIND_SPEED);
 
-
         ForecastAdapter.DetailViewHolder holder = (ForecastAdapter.DetailViewHolder) getView().getTag();
         holder.date.setText(Utility.getFriendlyDayString(getActivity(), date));
         holder.description.setText(description);
         holder.highTemperature.setText(Utility.formatTemperature(getActivity(), max, isMetric));
         holder.lowTemperature.setText(Utility.formatTemperature(getActivity(), min, isMetric));
-        holder.imageIcon.setImageResource(R.mipmap.ic_launcher);
+        holder.imageIcon.setImageResource(Utility.getImageResource(description));
         holder.humidity.setText(humidity);
         holder.pressure.setText(pressure);
 
