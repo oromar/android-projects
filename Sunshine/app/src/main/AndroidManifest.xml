@@ -12,7 +12,7 @@
         <provider
             android:authorities="br.com.oromar.dev.android.sunshine"
             android:name=".data.WeatherProvider"/>
-        
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >

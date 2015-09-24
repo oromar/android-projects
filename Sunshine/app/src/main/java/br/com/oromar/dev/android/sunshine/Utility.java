@@ -148,7 +148,7 @@ public class Utility {
         switch (weatherDescription){
             case "Clear":
                 return R.drawable.ic_clear;
-            case "Cloudy":
+            case "Clouds":
                 return R.drawable.ic_cloudy;
             case "Rain":
                 return R.drawable.ic_rain;
@@ -172,7 +172,7 @@ public class Utility {
         switch (weatherDescription){
             case "Clear":
                 return R.drawable.art_clear;
-            case "Cloudy":
+            case "Clouds":
                 return R.drawable.art_clouds;
             case "Rain":
                 return R.drawable.art_rain;

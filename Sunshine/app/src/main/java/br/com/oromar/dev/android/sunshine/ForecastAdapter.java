@@ -76,7 +76,7 @@ public class ForecastAdapter extends CursorAdapter {
 
         int layoutId = -1;
 
-        if (viewType == VIEW_TYPE_TODAY){
+        if (viewType == VIEW_TYPE_TODAY) {
 
             layoutId = R.layout.list_item_forecast_today;
 
@@ -100,7 +100,8 @@ public class ForecastAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        int viewType = cursor.getPosition();
+        int position = cursor.getPosition();
+        int viewType = getItemViewType(position);
 
         long date = cursor.getLong(ForecastAdapter.COL_WEATHER_DATE);
         double min = cursor.getDouble(COL_WEATHER_MIN_TEMP);
@@ -124,34 +125,34 @@ public class ForecastAdapter extends CursorAdapter {
 
     public static class ViewHolder {
 
-        public static TextView  date;
-        public static TextView  highTemperature;
-        public static TextView  lowTemperature;
-        public static TextView  description;
-        public static ImageView imageIcon;
+        public final TextView  date;
+        public final TextView  highTemperature;
+        public final TextView  lowTemperature;
+        public final TextView  description;
+        public final ImageView imageIcon;
 
         public ViewHolder(View view) {
-            ViewHolder.date = (TextView) view.findViewById(R.id.list_item_date_textview);
-            ViewHolder.highTemperature = (TextView) view.findViewById(R.id.list_item_high_textview);
-            ViewHolder.lowTemperature = (TextView) view.findViewById(R.id.list_item_low_textview);
-            ViewHolder.description = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-            ViewHolder.imageIcon = (ImageView) view.findViewById(R.id.list_item_icon);
+            date = (TextView) view.findViewById(R.id.list_item_date_textview);
+            highTemperature = (TextView) view.findViewById(R.id.list_item_high_textview);
+            lowTemperature = (TextView) view.findViewById(R.id.list_item_low_textview);
+            description = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+            imageIcon = (ImageView) view.findViewById(R.id.list_item_icon);
         }
     }
 
     public static class DetailViewHolder extends ViewHolder{
 
-        public static TextView  humidity;
-        public static TextView  wind;
-        public static TextView  pressure;
-        public static TextView  location;
+        public final TextView  humidity;
+        public final TextView  wind;
+        public final TextView  pressure;
+        public final TextView  location;
 
         public DetailViewHolder(View view) {
             super(view);
-            DetailViewHolder.humidity = (TextView) view.findViewById(R.id.list_item_humidity_text_view);
-            DetailViewHolder.wind= (TextView) view.findViewById(R.id.list_item_wind_text_view);
-            DetailViewHolder.pressure = (TextView) view.findViewById(R.id.list_item_pressure_text_view);
-            DetailViewHolder.location = (TextView) view.findViewById(R.id.list_item_location_textview);
+            humidity = (TextView) view.findViewById(R.id.list_item_humidity_text_view);
+            wind= (TextView) view.findViewById(R.id.list_item_wind_text_view);
+            pressure = (TextView) view.findViewById(R.id.list_item_pressure_text_view);
+            location = (TextView) view.findViewById(R.id.list_item_location_textview);
         }
 
     }
