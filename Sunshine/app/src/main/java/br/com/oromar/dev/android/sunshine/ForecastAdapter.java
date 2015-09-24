@@ -33,6 +33,7 @@ public class ForecastAdapter extends CursorAdapter {
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.LocationEntry.COORD_LAT,
             WeatherContract.LocationEntry.COORD_LONG,
+            WeatherContract.LocationEntry.CITY_NAME
     };
 
     static final int COL_WEATHER_ID = 0;
@@ -47,6 +48,7 @@ public class ForecastAdapter extends CursorAdapter {
     static final int COL_WIND_SPEED = 9;
     static final int COL_COORD_LAT = 10;
     static final int COL_COORD_LONG = 11;
+    static final int COL_CITY_NAME = 12;
 
 
 
@@ -132,12 +134,14 @@ public class ForecastAdapter extends CursorAdapter {
         public static TextView  humidity;
         public static TextView  wind;
         public static TextView  pressure;
+        public static TextView  location;
 
         public DetailViewHolder(View view) {
             super(view);
             DetailViewHolder.humidity = (TextView) view.findViewById(R.id.list_item_humidity_text_view);
             DetailViewHolder.wind= (TextView) view.findViewById(R.id.list_item_wind_text_view);
             DetailViewHolder.pressure = (TextView) view.findViewById(R.id.list_item_pressure_text_view);
+            DetailViewHolder.location = (TextView) view.findViewById(R.id.list_item_location_textview);
         }
 
     }

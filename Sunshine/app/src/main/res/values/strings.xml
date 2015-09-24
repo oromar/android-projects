@@ -11,6 +11,7 @@
     <string name="humidity_label">Humidity:</string>
     <string name="wind_label">Wind:</string>
     <string name="pressure_label">Pressure:</string>
+    <string name="location_label">Location:</string>
 
     <string name="pref_location_key">Location</string>
     <string name="pref_location_default_value">94043</string>
