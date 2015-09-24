@@ -1,23 +1,15 @@
 package br.com.oromar.dev.android.choosemovies;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
-import android.support.v7.internal.VersionUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ImageAdapter extends BaseAdapter {
 

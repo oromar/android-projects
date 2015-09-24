@@ -24,7 +24,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
 
     private static final String HASHTAG_FORECAST_SHARE = " #SunshineApp";
     private String mForecastDetail;
-    private static final int DETAIL_LOADER = 0;
+    private static final int DETAIL_LOADER = 1;
 
     public DetailActivityFragment() {
         setHasOptionsMenu(true);
@@ -86,11 +86,9 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         boolean isMetric = Utility.isMetric(getActivity());
-        if (!data.moveToFirst()){
+        if (!data.moveToFirst()) {
             return;
         }
-
-        int position = data.getPosition();
 
         long date = data.getLong(ForecastAdapter.COL_WEATHER_DATE);
         double max = data.getDouble(ForecastAdapter.COL_WEATHER_MAX_TEMP);
@@ -102,15 +100,12 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         String location = data.getString(ForecastAdapter.COL_CITY_NAME);
 
         ForecastAdapter.DetailViewHolder holder = (ForecastAdapter.DetailViewHolder) getView().getTag();
+
         holder.date.setText(Utility.getFriendlyDayString(getActivity(), date));
         holder.description.setText(description);
         holder.highTemperature.setText(Utility.formatTemperature(getActivity(), max, isMetric));
         holder.lowTemperature.setText(Utility.formatTemperature(getActivity(), min, isMetric));
-        if (position == 0) {
-            holder.imageIcon.setImageResource(Utility.getImageResourceToday(description));
-        } else {
-            holder.imageIcon.setImageResource(Utility.getImageResource(description));
-        }
+        holder.imageIcon.setImageResource(Utility.getImageResourceToday(description));
         holder.humidity.setText(humidity);
         holder.pressure.setText(pressure);
         holder.location.setText(location);

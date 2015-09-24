@@ -71,16 +71,26 @@ public class ForecastAdapter extends CursorAdapter {
      */
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
+
         int viewType = getItemViewType(cursor.getPosition());
+
         int layoutId = -1;
+
         if (viewType == VIEW_TYPE_TODAY){
+
             layoutId = R.layout.list_item_forecast_today;
+
         } else {
+
             layoutId = R.layout.list_item_forecast;
         }
+
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
+
         ViewHolder viewHolder = new ViewHolder(view);
+
         view.setTag(viewHolder);
+
         return view;
     }
 
@@ -98,6 +108,7 @@ public class ForecastAdapter extends CursorAdapter {
         String desc = cursor.getString(COL_WEATHER_DESC);
 
         boolean isMetric = Utility.isMetric(context);
+
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         if (viewType == VIEW_TYPE_TODAY){
@@ -110,7 +121,6 @@ public class ForecastAdapter extends CursorAdapter {
         viewHolder.highTemperature.setText(Utility.formatTemperature(mContext, max, isMetric));
         viewHolder.description.setText(desc);
     }
-
 
     public static class ViewHolder {
 

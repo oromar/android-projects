@@ -53,7 +53,16 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View result = inflater.inflate(R.layout.fragment_main, container, false);
+
+        handleAdapterAndListView(result);
+
+        return result;
+    }
+
+    private void handleAdapterAndListView(View result) {
+
         final ListView listView = (ListView) result.findViewById(R.id.listview_forecast);
 
         String location = Utility.getPreferredLocation(getActivity());
@@ -91,8 +100,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 }
             }
         });
-
-        return result;
     }
 
     @Override
@@ -109,6 +116,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private void updateWeather() {
             FetchWeatherTask reader = new FetchWeatherTask(getActivity());
             reader.execute(Utility.getPreferredLocation(getActivity()));
+//            handleAdapterAndListView(getView());
     }
 
     @Override

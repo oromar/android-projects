@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        super.onStart();
         if (searchText.getText() != null && !searchText.getText().toString().isEmpty())  {
             updateMovies(searchText.getText().toString());
         } else {
             updateMovies();
         }
+        super.onStart();
     }
 
     private void updateMovies(String ...searchText) {

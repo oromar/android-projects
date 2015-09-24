@@ -22,19 +22,19 @@
             <TextView
                 android:textSize="15dp"
                 android:layout_gravity="center_horizontal"
-                android:id="@id/list_item_date_textview"
+                android:id="@+id/list_item_date_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:textSize="20dp"
-                android:id="@id/list_item_high_textview"
+                android:id="@+id/list_item_high_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:textSize="15dp"
-                android:id="@id/list_item_low_textview"
+                android:id="@+id/list_item_low_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@id/list_item_icon"
+                android:id="@+id/list_item_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -58,7 +58,7 @@
                 android:textSize="13dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@id/list_item_forecast_textview"
+                android:id="@+id/list_item_forecast_textview"
                 />
 
         </LinearLayout>
