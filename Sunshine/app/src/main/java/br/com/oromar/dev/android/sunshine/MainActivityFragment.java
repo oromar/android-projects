@@ -108,7 +108,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private void updateWeather() {
             FetchWeatherTask reader = new FetchWeatherTask(getActivity());
-            reader.execute();
+            reader.execute(Utility.getPreferredLocation(getActivity()));
     }
 
     @Override
