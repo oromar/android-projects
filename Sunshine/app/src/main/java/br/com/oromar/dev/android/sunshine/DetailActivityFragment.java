@@ -106,10 +106,10 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         holder.highTemperature.setText(Utility.formatTemperature(getActivity(), max, isMetric));
         holder.lowTemperature.setText(Utility.formatTemperature(getActivity(), min, isMetric));
         holder.imageIcon.setImageResource(Utility.getImageResourceToday(description));
-        holder.humidity.setText(humidity);
-        holder.pressure.setText(pressure);
+        holder.humidity.setText(humidity + getString(R.string.humidity_suffix));
+        holder.pressure.setText(pressure + getString(R.string.pressure_suffix));
         holder.location.setText(location);
-        holder.wind.setText(windSpeed);
+        holder.wind.setText(windSpeed + getString(R.string.wind_suffix));
     }
 
     @Override
