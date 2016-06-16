@@ -90,7 +90,9 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
             startActivity(settingsIntent);
             return true;
         }
-        if (id == R.id.search){
+
+        return super.onOptionsItemSelected(item);
+    }
 
         }
         return super.onOptionsItemSelected(item);

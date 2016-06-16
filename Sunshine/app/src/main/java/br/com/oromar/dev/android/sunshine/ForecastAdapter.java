@@ -2,16 +2,12 @@ package br.com.oromar.dev.android.sunshine;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import br.com.oromar.dev.android.sunshine.data.WeatherContract;
 
@@ -44,12 +40,11 @@ public class ForecastAdapter extends CursorAdapter {
     static final int COL_LOCATION_SETTING = 5;
     static final int COL_WEATHER_CONDITION_ID = 6;
     static final int COL_HUMIDITY = 7;
-    static final int COL_PRESSURE= 8;
+    static final int COL_PRESSURE = 8;
     static final int COL_WIND_SPEED = 9;
     static final int COL_COORD_LAT = 10;
     static final int COL_COORD_LONG = 11;
     static final int COL_CITY_NAME = 12;
-
 
 
     public ForecastAdapter(Context context, Cursor c, int flags) {
@@ -112,7 +107,7 @@ public class ForecastAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        if (viewType == VIEW_TYPE_TODAY){
+        if (viewType == VIEW_TYPE_TODAY) {
             viewHolder.imageIcon.setImageResource(Utility.getImageResourceToday(desc));
         } else {
             viewHolder.imageIcon.setImageResource(Utility.getImageResource(desc));
@@ -125,10 +120,10 @@ public class ForecastAdapter extends CursorAdapter {
 
     public static class ViewHolder {
 
-        public final TextView  date;
-        public final TextView  highTemperature;
-        public final TextView  lowTemperature;
-        public final TextView  description;
+        public final TextView date;
+        public final TextView highTemperature;
+        public final TextView lowTemperature;
+        public final TextView description;
         public final ImageView imageIcon;
 
         public ViewHolder(View view) {
@@ -140,22 +135,19 @@ public class ForecastAdapter extends CursorAdapter {
         }
     }
 
-    public static class DetailViewHolder extends ViewHolder{
+    public static class DetailViewHolder extends ViewHolder {
 
-        public final TextView  humidity;
-        public final TextView  wind;
-        public final TextView  pressure;
-        public final TextView  location;
+        public final TextView humidity;
+        public final TextView wind;
+        public final TextView pressure;
+        public final TextView location;
 
         public DetailViewHolder(View view) {
             super(view);
             humidity = (TextView) view.findViewById(R.id.list_item_humidity_text_view);
-            wind= (TextView) view.findViewById(R.id.list_item_wind_text_view);
+            wind = (TextView) view.findViewById(R.id.list_item_wind_text_view);
             pressure = (TextView) view.findViewById(R.id.list_item_pressure_text_view);
             location = (TextView) view.findViewById(R.id.list_item_location_textview);
         }
-
     }
-
-
 }

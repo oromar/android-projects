@@ -14,4 +14,8 @@
         android:entries="@array/sort_titles"
         android:entryValues="@array/sort_values"/>
 
+    <CheckBoxPreference
+        android:title="Allow Adult Movies"
+        android:key="@string/allow_adult" />
+
 </PreferenceScreen>

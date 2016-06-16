@@ -34,8 +34,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_share, menu);
         MenuItem menuItem = menu.findItem(R.id.android_share_link);
-        ShareActionProvider mShareActionProvider =
-                (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createIntentShare());
         }
@@ -71,15 +70,10 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Intent i = getActivity().getIntent();
-        if ( i == null) {
+        if (i == null) {
             return null;
         }
-        CursorLoader loader = new CursorLoader(getActivity(),
-                i.getData(),
-                ForecastAdapter.FORECAST_COLUMNS,
-                null,
-                null,
-                WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ");
+        CursorLoader loader = new CursorLoader(getActivity(), i.getData(), ForecastAdapter.FORECAST_COLUMNS, null, null, WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ");
         return loader;
     }
 
@@ -115,7 +109,6 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
-
 
 
 }

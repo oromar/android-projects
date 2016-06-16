@@ -55,10 +55,7 @@ public class Utility {
         if (julianDay == currentJulianDay) {
             String today = context.getString(R.string.today);
             int formatId = R.string.format_full_friendly_date;
-            return String.format(context.getString(
-                    formatId,
-                    today,
-                    getFormattedMonthDay(context, dateInMillis)));
+            return String.format(context.getString(formatId, today, getFormattedMonthDay(context, dateInMillis)));
         } else if (julianDay < currentJulianDay + 7) {
 // If the input date is less than a week in the future, just return the day name.
             return getDayName(context, dateInMillis);
@@ -116,15 +113,12 @@ public class Utility {
 
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(context.getString(R.string.pref_location_key),
-                context.getString(R.string.pref_location_default_value));
+        return prefs.getString(context.getString(R.string.pref_location_key), context.getString(R.string.pref_location_default_value));
     }
 
     public static boolean isMetric(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(context.getString(R.string.pref_units_key),
-                context.getString(R.string.pref_units_default_value))
-                .equals(context.getString(R.string.pref_units_metric));
+        return prefs.getString(context.getString(R.string.pref_units_key), context.getString(R.string.pref_units_default_value)).equals(context.getString(R.string.pref_units_metric));
     }
 
     public static String formatTemperature(Context context, double temperature, boolean isMetric) {
@@ -143,9 +137,9 @@ public class Utility {
         return DateFormat.getDateInstance().format(date);
     }
 
-    public static int getImageResource(String weatherDescription){
+    public static int getImageResource(String weatherDescription) {
 
-        switch (weatherDescription){
+        switch (weatherDescription) {
             case "Clear":
                 return R.drawable.ic_clear;
             case "Clouds":
@@ -167,9 +161,9 @@ public class Utility {
         }
     }
 
-    public static int getImageResourceToday(String weatherDescription){
+    public static int getImageResourceToday(String weatherDescription) {
 
-        switch (weatherDescription){
+        switch (weatherDescription) {
             case "Clear":
                 return R.drawable.art_clear;
             case "Clouds":

@@ -1,11 +1,9 @@
 package br.com.oromar.dev.android.sunshine;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -45,43 +43,25 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void onLocationChanged(){
+    public void onLocationChanged() {
         updateWeather();
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fragment_main, container, false);
-
         handleAdapterAndListView(result);
-
         return result;
     }
 
     private void handleAdapterAndListView(View result) {
 
         final ListView listView = (ListView) result.findViewById(R.id.listview_forecast);
-
         String location = Utility.getPreferredLocation(getActivity());
-
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ";
-
-        Uri weatherForLocationUri = WeatherContract
-                .WeatherEntry
-                .buildWeatherLocationWithStartDate(
-                        location, System.currentTimeMillis());
-
-        Cursor cur = getActivity()
-                .getContentResolver()
-                .query(weatherForLocationUri,
-                        ForecastAdapter.FORECAST_COLUMNS,
-                        null,
-                        null,
-                        sortOrder);
-
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(location, System.currentTimeMillis());
+        Cursor cur = getActivity().getContentResolver().query(weatherForLocationUri, ForecastAdapter.FORECAST_COLUMNS, null, null, sortOrder);
         adapter = new ForecastAdapter(getActivity(), cur, 0);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,10 +72,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Utility.getPreferredLocation(getActivity());
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                                    locationSetting, cursor.getLong(ForecastAdapter.COL_WEATHER_DATE)
-                            ));
+                    Intent intent = new Intent(getActivity(), DetailActivity.class).setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationSetting, cursor.getLong(ForecastAdapter.COL_WEATHER_DATE)));
                     startActivity(intent);
                 }
             }
@@ -114,26 +91,16 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeather() {
-            FetchWeatherTask reader = new FetchWeatherTask(getActivity());
-            reader.execute(Utility.getPreferredLocation(getActivity()));
+        FetchWeatherTask reader = new FetchWeatherTask(getActivity());
+        reader.execute(Utility.getPreferredLocation(getActivity()));
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String locattionSetting = Utility.getPreferredLocation(getActivity());
         String sort = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ";
-        Uri uri =
-                WeatherContract
-                        .WeatherEntry
-                        .buildWeatherLocationWithStartDate(
-                                locattionSetting, System.currentTimeMillis());
-        return new CursorLoader(
-                getActivity(),
-                uri,
-                ForecastAdapter.FORECAST_COLUMNS,
-                null,
-                null,
-                sort);
+        Uri uri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(locattionSetting, System.currentTimeMillis());
+        return new CursorLoader(getActivity(), uri, ForecastAdapter.FORECAST_COLUMNS, null, null, sort);
     }
 
     @Override
