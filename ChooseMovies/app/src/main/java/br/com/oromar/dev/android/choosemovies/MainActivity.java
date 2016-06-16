@@ -1,5 +1,8 @@
 package br.com.oromar.dev.android.choosemovies;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements OnItemClickListener , View.OnKeyListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity  implements OnItemClickListener {
 
     public static final String SEARCH_BASE_URL = "http://api.themoviedb.org/3/search/movie";
     public static final String API_KEY_VALUE = "f8962980164a4f3dabaf7709de21caf8";
@@ -55,8 +58,6 @@ public class MainActivity extends AppCompatActivity
     public static final String LANGUAGE = "language";
     public static final String QUERY = "query";
     private ImageAdapter adapter;
-    private EditText searchText;
-    private Button cancelSearchButton;
     private Movie[] movies;
 
     @Override
@@ -72,10 +73,7 @@ public class MainActivity extends AppCompatActivity
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
         gridView.setScrollingCacheEnabled(true);
-        searchText = (EditText) findViewById(R.id.search_field);
-        searchText.setOnKeyListener(this);
-        cancelSearchButton  = (Button) findViewById(R.id.cancel_action_btn);
-        cancelSearchButton.setOnClickListener(this);
+        updateMovies();
     }
 
     @Override
@@ -92,17 +90,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(settingsIntent);
             return true;
         }
-        return super.onOptionsItemSelected(item);
-    }
+        if (id == R.id.search){
 
-    @Override
-    protected void onStart() {
-        if (searchText.getText() != null && !searchText.getText().toString().isEmpty())  {
-            updateMovies(searchText.getText().toString());
-        } else {
-            updateMovies();
         }
-        super.onStart();
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateMovies(String ...searchText) {
@@ -116,26 +107,6 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(MainActivity.this, DetailActivity.class);
         i.putExtra(SELECTED_MOVIE, selectedMovie);
         startActivity(i);
-    }
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                updateMovies(searchText.getText().toString());
-            } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-                finish();
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.equals(cancelSearchButton)) {
-            searchText.setText("");
-            updateMovies();
-        }
     }
 
     public class DiscoveryMoviesTask extends AsyncTask<String, Void, Movie[]> {

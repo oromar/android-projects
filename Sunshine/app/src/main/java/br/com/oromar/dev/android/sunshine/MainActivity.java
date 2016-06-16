@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new MainActivityFragment(), FORECASTFRAGMENT_TAG)
+                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
                     .commit();
         }
         setContentView(R.layout.activity_main);
@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         String location = Utility.getPreferredLocation(this);
         if (!location.equals(mLocation)) {
-            MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            ForecastFragment fragment = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
             fragment.onLocationChanged();
             mLocation = location;
         }

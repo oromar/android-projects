@@ -25,12 +25,12 @@ import br.com.oromar.dev.android.sunshine.data.WeatherContract;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int FORECAST_LOADER = 0;
     private ForecastAdapter adapter;
 
-    public MainActivityFragment() {
+    public ForecastFragment() {
     }
 
     @Override
