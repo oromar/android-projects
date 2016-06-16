@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity
         adapter = new ImageAdapter(this, new ArrayList<Uri>());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
+        gridView.setScrollingCacheEnabled(true);
         searchText = (EditText) findViewById(R.id.search_field);
         searchText.setOnKeyListener(this);
         cancelSearchButton  = (Button) findViewById(R.id.cancel_action_btn);

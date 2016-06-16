@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -67,8 +68,11 @@ public class ImageAdapter extends BaseAdapter {
 
         Picasso.with(context)
                 .load(urls.get(position))
+                .noFade()
+                .noPlaceholder()
                 .resize(Math.round(niw), Math.round(nih))
                 .into(imageView);
+
         return imageView;
     }
 }
