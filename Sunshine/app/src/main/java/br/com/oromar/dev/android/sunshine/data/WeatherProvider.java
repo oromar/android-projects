@@ -275,8 +275,7 @@ public class WeatherProvider extends ContentProvider {
         // by the update.
         final int match = sUriMatcher.match(uri);
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final Uri returnUri;
-        int rows = 0;
+        int rows;
         switch (match){
             case WEATHER: {
                 normalizeDate(values);
@@ -307,9 +306,22 @@ public class WeatherProvider extends ContentProvider {
                 try {
                     for (ContentValues value : values) {
                         normalizeDate(value);
-                        long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        Cursor cursor = db.query(WeatherContract.WeatherEntry.TABLE_NAME,
+                                                 null,
+                                                 WeatherContract.WeatherEntry.COLUMN_LOC_KEY + " = ? AND "
+                                                 + WeatherContract.WeatherEntry.COLUMN_DATE + " = ? " ,
+                                                 new String [] {
+                                                         value.getAsString(WeatherContract.WeatherEntry.COLUMN_LOC_KEY),
+                                                         value.getAsString(WeatherContract.WeatherEntry.COLUMN_DATE)
+                                                 },
+                                                 null,
+                                                 null,
+                                                 null);
+                        if (cursor.getCount() == 0){
+                            long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
                         }
                     }
                     db.setTransactionSuccessful();

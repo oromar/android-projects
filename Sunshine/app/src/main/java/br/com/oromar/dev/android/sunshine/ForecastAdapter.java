@@ -27,6 +27,7 @@ public class ForecastAdapter extends CursorAdapter {
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
             WeatherContract.WeatherEntry.COLUMN_PRESSURE,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
+            WeatherContract.WeatherEntry.COLUMN_DEGREES,
             WeatherContract.LocationEntry.COORD_LAT,
             WeatherContract.LocationEntry.COORD_LONG,
             WeatherContract.LocationEntry.CITY_NAME
@@ -42,9 +43,10 @@ public class ForecastAdapter extends CursorAdapter {
     static final int COL_HUMIDITY = 7;
     static final int COL_PRESSURE = 8;
     static final int COL_WIND_SPEED = 9;
-    static final int COL_COORD_LAT = 10;
-    static final int COL_COORD_LONG = 11;
-    static final int COL_CITY_NAME = 12;
+    static final int COL_DEGREES = 10;
+    static final int COL_COORD_LAT = 11;
+    static final int COL_COORD_LONG = 12;
+    static final int COL_CITY_NAME = 13;
 
 
     public ForecastAdapter(Context context, Cursor c, int flags) {
@@ -68,24 +70,15 @@ public class ForecastAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
         int viewType = getItemViewType(cursor.getPosition());
-
-        int layoutId = -1;
-
+        int layoutId;
         if (viewType == VIEW_TYPE_TODAY) {
-
             layoutId = R.layout.list_item_forecast_today;
-
         } else {
-
             layoutId = R.layout.list_item_forecast;
         }
-
         View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
-
         ViewHolder viewHolder = new ViewHolder(view);
-
         view.setTag(viewHolder);
-
         return view;
     }
 
@@ -102,11 +95,9 @@ public class ForecastAdapter extends CursorAdapter {
         double min = cursor.getDouble(COL_WEATHER_MIN_TEMP);
         double max = cursor.getDouble(COL_WEATHER_MAX_TEMP);
         String desc = cursor.getString(COL_WEATHER_DESC);
-
         boolean isMetric = Utility.isMetric(context);
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-
         if (viewType == VIEW_TYPE_TODAY) {
             viewHolder.imageIcon.setImageResource(Utility.getImageResourceToday(desc));
         } else {

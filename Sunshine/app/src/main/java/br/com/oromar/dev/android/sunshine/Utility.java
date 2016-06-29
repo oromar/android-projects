@@ -132,9 +132,14 @@ public class Utility {
         return result;
     }
 
-    static String formatDate(long dateInMillis) {
+    public static String formatDate(long dateInMillis) {
         Date date = new Date(dateInMillis);
         return DateFormat.getDateInstance().format(date);
+    }
+
+    public static String getWindDirection(double degrees){
+        String direction = "";
+        return direction;
     }
 
     public static int getImageResource(String weatherDescription) {

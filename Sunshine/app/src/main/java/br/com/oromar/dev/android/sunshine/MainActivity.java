@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
-
+    private SwipeRefreshLayout mContainerSwipeRefreshLayout;
     private String mLocation;
     private static final String FORECASTFRAGMENT_TAG = "fragment_tag";
 
@@ -22,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
         mLocation = PreferenceManager
                 .getDefaultSharedPreferences(this)
                 .getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default_value));
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

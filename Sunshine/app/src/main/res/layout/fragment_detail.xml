@@ -3,17 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="16dp"
     tools:context="br.com.oromar.dev.android.sunshine.DetailActivityFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="16dp"
+                android:background="@color/detail_today_background"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout
                 android:paddingTop="10dp"
@@ -24,7 +31,8 @@
                 <TextView
                     android:id="@+id/list_item_date_textview"
                     android:gravity="left"
-                    android:textSize="30dp"
+                    android:textSize="45dp"
+                    android:textColor="@color/label_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -48,6 +56,7 @@
                     <TextView
                         android:id="@+id/list_item_high_textview"
                         android:textSize="25dp"
+                        android:textColor="@color/label_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -55,6 +64,7 @@
                         android:id="@+id/list_item_low_textview"
                         android:layout_marginTop="15dp"
                         android:textSize="18dp"
+                        android:textColor="@color/label_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -77,11 +87,20 @@
                         android:id="@+id/list_item_forecast_textview"
                         android:layout_marginTop="20dp"
                         android:textSize="30dp"
+                        android:textColor="@color/label_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
             </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <LinearLayout
                 android:paddingLeft="5dp"
@@ -167,6 +186,8 @@
                     android:paddingLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

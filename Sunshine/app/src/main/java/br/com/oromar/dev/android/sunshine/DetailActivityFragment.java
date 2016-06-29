@@ -92,6 +92,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         String pressure = data.getString(ForecastAdapter.COL_PRESSURE);
         String windSpeed = data.getString(ForecastAdapter.COL_WIND_SPEED);
         String location = data.getString(ForecastAdapter.COL_CITY_NAME);
+        double degrees = data.getDouble(ForecastAdapter.COL_DEGREES);
 
         ForecastAdapter.DetailViewHolder holder = (ForecastAdapter.DetailViewHolder) getView().getTag();
 
@@ -103,7 +104,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         holder.humidity.setText(humidity + getString(R.string.humidity_suffix));
         holder.pressure.setText(pressure + getString(R.string.pressure_suffix));
         holder.location.setText(location);
-        holder.wind.setText(windSpeed + getString(R.string.wind_suffix));
+        holder.wind.setText(windSpeed + getString(R.string.wind_suffix) + " " + Utility.getWindDirection(degrees));
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,9 +25,10 @@ import br.com.oromar.dev.android.sunshine.data.WeatherContract;
  * A placeholder fragment containing a simple view.
  */
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
+    private SwipeRefreshLayout mContainerSwipeRefreshLayout;
     private static final int FORECAST_LOADER = 0;
     private ForecastAdapter adapter;
+    private View mFragmentView;
 
     public ForecastFragment() {
     }
@@ -45,19 +47,27 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     public void onLocationChanged() {
         updateWeather();
-        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View result = inflater.inflate(R.layout.fragment_main, container, false);
-        handleAdapterAndListView(result);
-        return result;
+        mFragmentView = inflater.inflate(R.layout.fragment_main, container, false);
+        mContainerSwipeRefreshLayout = (SwipeRefreshLayout) mFragmentView.findViewById(R.id.swipeContainer);
+        mContainerSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateWeather();
+            }
+        });
+
+        mContainerSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright);
+        handleAdapterAndListView(mFragmentView);
+        return mFragmentView;
     }
 
-    private void handleAdapterAndListView(View result) {
+    public void handleAdapterAndListView(View view) {
 
-        final ListView listView = (ListView) result.findViewById(R.id.listview_forecast);
+        final ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
         String location = Utility.getPreferredLocation(getActivity());
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ";
         Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(location, System.currentTimeMillis());
@@ -86,20 +96,19 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
         return true;
     }
 
     private void updateWeather() {
-        FetchWeatherTask reader = new FetchWeatherTask(getActivity());
+        FetchWeatherTask reader = new FetchWeatherTask(getActivity(), FORECAST_LOADER, this, mFragmentView, mContainerSwipeRefreshLayout);
         reader.execute(Utility.getPreferredLocation(getActivity()));
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String locattionSetting = Utility.getPreferredLocation(getActivity());
+        String locationSetting = Utility.getPreferredLocation(getActivity());
         String sort = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC ";
-        Uri uri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(locattionSetting, System.currentTimeMillis());
+        Uri uri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(locationSetting, System.currentTimeMillis());
         return new CursorLoader(getActivity(), uri, ForecastAdapter.FORECAST_COLUMNS, null, null, sort);
     }
 
